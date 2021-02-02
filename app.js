@@ -1,5 +1,10 @@
-const weather = new Weather('London','uk');
+
 const ui = new UI();
+const storage = new Storage();
+
+// Get stored location data
+const weatherLocation = storage.getLocationData();
+const weather = new Weather(weatherLocation.city,weatherLocation.state);
 
 document.addEventListener('DOMContentLoaded',getWeather);
 document.getElementById('w-change-btn').addEventListener('click',function(e){
@@ -7,6 +12,9 @@ document.getElementById('w-change-btn').addEventListener('click',function(e){
   const state = document.getElementById('state').value;
 
   weather.changeLocation(city,state);
+
+  // set location in LS
+  storage.setLocationData(city,state);
 
   getWeather();
 
